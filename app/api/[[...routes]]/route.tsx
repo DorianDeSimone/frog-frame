@@ -30,7 +30,7 @@ app.frame('/submit', (c) => {
   const { verified, frameData } = c;
   
   console.log("frameData", frameData)
-  const { inputText } = frameData;
+  // const { inputText } = frameData;
 
 
   if(!verified) {
@@ -75,6 +75,8 @@ app.frame('/submit', (c) => {
       ],
     })
   }
+
+  const inputText = ""
 
   if (!validateEmail(inputText)) {
     return c.res({
