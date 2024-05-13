@@ -16,6 +16,7 @@ const app = new Frog({
 // export const runtime = 'edge'
 
 app.frame('/', (c) => {
+  console.log("c", c)
   const { buttonValue, inputText, status } = c
   const fruit = inputText || buttonValue
   return c.res({
