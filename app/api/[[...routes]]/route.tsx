@@ -74,7 +74,6 @@ app.frame('/submit', (c) => {
     })
   }
 
-  const fruit = inputText || buttonValue
   return c.res({
     action: '/submit',
     image: (
@@ -108,7 +107,7 @@ app.frame('/submit', (c) => {
           }}
         >
           {status === 'response'
-            ? `Nice choice.${fruit ? ` ${fruit.toUpperCase()}!!` : ''}`
+            ? `Nice choice`
             : 'Welcome!'}
         </div>
       </div>
