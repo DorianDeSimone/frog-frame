@@ -1,11 +1,11 @@
 /** @jsxImportSource frog/jsx */
 
+import { validateEmail } from '@/app/utils/validation'
 import { Button, Frog, TextInput } from 'frog'
 import { devtools } from 'frog/dev'
 import { neynar } from 'frog/hubs'
 import { handle } from 'frog/next'
 import { serveStatic } from 'frog/serve-static'
-import Welcome from '../../../public/assets/welcome.jpg'
 
 const app = new Frog({
   assetsPath: '/',
@@ -27,9 +27,11 @@ app.frame('/', (c) => {
 
 app.frame('/submit', (c) => {
   console.log("c", c)
-  const { verified, frameData } = c
-
+  const { verified, frameData } = c;
+  
   console.log("frameData", frameData)
+  const { inputText } = frameData;
+
 
   if(!verified) {
     return c.res({
@@ -74,8 +76,51 @@ app.frame('/submit', (c) => {
     })
   }
 
+  if (!validateEmail(inputText)) {
+    return c.res({
+      action: '/',
+      image: (
+        <div
+          style={{
+            alignItems: 'center',
+            background:
+              status === 'response'
+                ? 'linear-gradient(to right, #432889, #17101F)'
+                : 'black',
+            backgroundSize: '100% 100%',
+            display: 'flex',
+            flexDirection: 'column',
+            flexWrap: 'nowrap',
+            height: '100%',
+            justifyContent: 'center',
+            textAlign: 'center',
+            width: '100%',
+          }}
+        >
+          <div
+            style={{
+              color: 'white',
+              fontSize: 60,
+              fontStyle: 'normal',
+              letterSpacing: '-0.025em',
+              lineHeight: 1.4,
+              marginTop: 30,
+              padding: '0 120px',
+              whiteSpace: 'pre-wrap',
+            }}
+          >
+            The email is invalid
+          </div>
+        </div>
+      ),
+      intents: [
+        <Button value="retry">Retry</Button>,
+      ],
+    })
+  }
+
   return c.res({
-    action: '/submit',
+    action: '/',
     image: (
       <div
         style={{
@@ -106,15 +151,12 @@ app.frame('/submit', (c) => {
             whiteSpace: 'pre-wrap',
           }}
         >
-          {status === 'response'
-            ? `Nice choice`
-            : 'Welcome!'}
+          Email should be managed here !
         </div>
       </div>
     ),
     intents: [
-      <TextInput placeholder="Enter your email..." />,
-      <Button value="submit">Subscribe</Button>,
+      <Button value="back">Back</Button>,
     ],
   })
 })
