@@ -28,7 +28,7 @@ app.frame('/', (c) => {
 })
 
 app.frame('/submit', (c: FrameContextType) => {
-  const { frameData, inputText } = c;
+  const { frameData, inputText = '' } = c;
   // const { verified, frameData } = c;
   const verified = true;
 
