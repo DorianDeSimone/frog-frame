@@ -10,7 +10,8 @@ import { serveStatic } from 'frog/serve-static'
 const app = new Frog({
   assetsPath: '/',
   basePath: '/api',
-  hub: neynar({ apiKey: process.env.NEXT_NEYNAR_API_KEY || "" })
+  hub: neynar({ apiKey: process.env.NEXT_NEYNAR_API_KEY || "" }),
+  verify: 'silent',
 })
 
 app.frame('/', (c) => {
@@ -20,7 +21,7 @@ app.frame('/', (c) => {
     imageAspectRatio: '1:1',
     intents: [
       <TextInput placeholder="Enter your email..." />,
-      <Button value="submit">Subscribe</Button>,
+      <Button>Subscribe</Button>,
     ],
   })
 })
