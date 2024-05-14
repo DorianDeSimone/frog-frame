@@ -41,10 +41,7 @@ app.frame('/submit', (c) => {
         <div
           style={{
             alignItems: 'center',
-            background:
-              status === 'response'
-                ? 'linear-gradient(to right, #432889, #17101F)'
-                : 'black',
+            background: 'black',
             backgroundSize: '100% 100%',
             display: 'flex',
             flexDirection: 'column',
@@ -86,10 +83,7 @@ app.frame('/submit', (c) => {
         <div
           style={{
             alignItems: 'center',
-            background:
-              status === 'response'
-                ? 'linear-gradient(to right, #432889, #17101F)'
-                : 'black',
+            background: 'black',
             backgroundSize: '100% 100%',
             display: 'flex',
             flexDirection: 'column',
@@ -128,10 +122,7 @@ app.frame('/submit', (c) => {
       <div
         style={{
           alignItems: 'center',
-          background:
-            status === 'response'
-              ? 'linear-gradient(to right, #432889, #17101F)'
-              : 'black',
+          background: 'black',
           backgroundSize: '100% 100%',
           display: 'flex',
           flexDirection: 'column',
