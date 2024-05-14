@@ -1,10 +1,8 @@
-"use client"
-
 import React, { useEffect } from 'react'
 
-const Client = () => {
+const ClientComp = () => {
   useEffect(() => {
-    console.log("page mounted")
+    console.log("mounted")
   }, [])
   
   return (
@@ -14,4 +12,4 @@ const Client = () => {
   )
 }
 
-export default Client
+export default ClientComp
