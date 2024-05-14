@@ -1,11 +1,10 @@
 /** @jsxImportSource frog/jsx */
 
-import { FrameContextType, FrameDataType } from '@/app/types/types'
 import { validateEmail } from '@/app/utils/validation'
 import { Button, Frog, TextInput } from 'frog'
 import { devtools } from 'frog/dev'
 import { neynar } from 'frog/hubs'
-import { neynar as neynarMid, type NeynarVariables } from 'frog/middlewares'
+import { neynar as neynarMid } from 'frog/middlewares'
 import { handle } from 'frog/next'
 import { serveStatic } from 'frog/serve-static'
 
@@ -24,7 +23,8 @@ app.use(
 )
 
 app.frame('/', (c) => {
-  console.log("c init", c.var.interactor)
+  console.log("c init", c)
+  // console.log("c init", c.var.interactor)
   return c.res({
     action: '/submit',
     image: `${process.env.NEXT_PUBLIC_SITE_URL}/assets/welcome.jpg`,
@@ -37,12 +37,9 @@ app.frame('/', (c) => {
 })
 
 app.frame('/submit', async (c) => {
-  console.log("c submit", c.var.interactor)
-  // const { verified, frameData, inputText = '' } = c;
-  const { frameData, inputText = '' } = c;
-  const verified = true;
-
-  // const { fid } = frameData || {}
+  const { verified, frameData, inputText = '' } = c;
+  // const { frameData, inputText = '' } = c;
+  // const verified = true;
 
   if(!verified) {
     return c.res({
@@ -140,44 +137,84 @@ app.frame('/submit', async (c) => {
 
     console.log("fields", fields)
 
-    return c.res({
-      action: '/',
-      image: (
-        <div
-          style={{
-            alignItems: 'center',
-            background: 'black',
-            backgroundSize: '100% 100%',
-            display: 'flex',
-            flexDirection: 'column',
-            flexWrap: 'nowrap',
-            height: '100%',
-            justifyContent: 'center',
-            textAlign: 'center',
-            width: '100%',
-          }}
-        >
+    if (fields.length === 1 && fields[0].name === "email") {
+      return c.res({
+        action: '/',
+        image: (
           <div
             style={{
-              color: 'white',
-              fontSize: 60,
-              fontStyle: 'normal',
-              letterSpacing: '-0.025em',
-              lineHeight: 1.4,
-              marginTop: 30,
-              padding: '0 120px',
-              whiteSpace: 'pre-wrap',
+              alignItems: 'center',
+              background: 'black',
+              backgroundSize: '100% 100%',
+              display: 'flex',
+              flexDirection: 'column',
+              flexWrap: 'nowrap',
+              height: '100%',
+              justifyContent: 'center',
+              textAlign: 'center',
+              width: '100%',
             }}
           >
-            Email sent !
+            <div
+              style={{
+                color: 'white',
+                fontSize: 60,
+                fontStyle: 'normal',
+                letterSpacing: '-0.025em',
+                lineHeight: 1.4,
+                marginTop: 30,
+                padding: '0 120px',
+                whiteSpace: 'pre-wrap',
+              }}
+            >
+              Email sent !
+            </div>
           </div>
-        </div>
-      ),
-      intents: [
-        <Button value="back">Back</Button>,
-      ],
-    })
-  } catch (error) {
+        ),
+        intents: [
+          <Button value="back">Back</Button>,
+        ],
+      })
+    } else {
+      return c.res({
+        action: '/',
+        image: (
+          <div
+            style={{
+              alignItems: 'center',
+              background: 'black',
+              backgroundSize: '100% 100%',
+              display: 'flex',
+              flexDirection: 'column',
+              flexWrap: 'nowrap',
+              height: '100%',
+              justifyContent: 'center',
+              textAlign: 'center',
+              width: '100%',
+            }}
+          >
+            <div
+              style={{
+                color: 'white',
+                fontSize: 60,
+                fontStyle: 'normal',
+                letterSpacing: '-0.025em',
+                lineHeight: 1.4,
+                marginTop: 30,
+                padding: '0 120px',
+                whiteSpace: 'pre-wrap',
+              }}
+            >
+              Invalid form!
+            </div>
+          </div>
+        ),
+        intents: [
+          <Button value="back">Back</Button>,
+        ],
+      })
+     }}
+   catch (error) {
       console.error('Error fetching form settings:', error);
       return c.res({
         action: '/',
