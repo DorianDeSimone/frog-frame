@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect } from 'react'
 import { getFrameMetadata } from 'frog/next'
 import type { Metadata } from 'next'
