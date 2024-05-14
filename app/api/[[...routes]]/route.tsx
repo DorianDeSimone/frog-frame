@@ -11,8 +11,8 @@ import { serveStatic } from 'frog/serve-static'
 const app = new Frog({
   assetsPath: '/',
   basePath: '/api',
-  hub: neynar({ apiKey: process.env.NEXT_NEYNAR_API_KEY || "" }),
-  verify: 'silent',
+  // hub: neynar({ apiKey: process.env.NEXT_NEYNAR_API_KEY || "" }),
+  // verify: 'silent',
 })
 
 app.frame('/', (c) => {
@@ -28,12 +28,13 @@ app.frame('/', (c) => {
 })
 
 app.frame('/submit', (c: FrameContextType) => {
-  console.log("c", c)
-  const { verified } = c;
+  const { frameData, inputText } = c;
+  // const { verified, frameData } = c;
+  const verified = true;
 
-  const frameData: FrameDataType = c.frameData;
-  const inputText = frameData?.inputText || '';
+  const { fid } = frameData || {}
 
+  console.log("fid", fid)
 
   if(!verified) {
     return c.res({

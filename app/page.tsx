@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { getFrameMetadata } from 'frog/next'
 import type { Metadata } from 'next'
 import Image from 'next/image'
@@ -14,6 +15,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function Home() {
+  useEffect(() => {
+    console.log("page mounted")
+  }, [])
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
