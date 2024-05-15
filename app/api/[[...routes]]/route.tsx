@@ -65,7 +65,7 @@ app.frame('/:formUrl', (c) => {
     image: `${process.env.NEXT_PUBLIC_SITE_URL}/assets/welcome.jpg`,
     imageAspectRatio: '1:1',
     intents: [
-      <TextInput placeholder="Enter your email..." />,
+      <TextInput placeholder="Enter your email...test" />,
       <Button>Subscribe</Button>,
     ],
   })
