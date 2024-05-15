@@ -56,9 +56,12 @@ app.use(
   }),
 )
 
-app.frame('/', (c) => {
+app.frame('/:formUrl', (c) => {
+  const { url } = c
+  const formUrl = url.split("/api/")[1];
+  
   return c.res({
-    action: '/submit',
+    action: `/submit/${formUrl}`,
     image: `${process.env.NEXT_PUBLIC_SITE_URL}/assets/welcome.jpg`,
     imageAspectRatio: '1:1',
     intents: [
@@ -68,16 +71,18 @@ app.frame('/', (c) => {
   })
 })
 
-app.frame('/submit', async (c) => {
-  // const { verified, frameData, inputText = '' } = c;
-  const { frameData, inputText = '' } = c;
+app.frame('/submit/:formUrl', async (c) => {
+  // const { verified, frameData, inputText = '', initialPath } = c;
+  const { frameData, inputText = '', initialPath } = c;
   const verified = true;
+
+  const formUrl = initialPath.split("/api/")[1];
 
   const { fid } = frameData || {}
 
   if(!verified) {
     return c.res({
-      action: '/',
+      action: `/${formUrl}`,
       image: stringImage("You are not verified"),
       intents: [
         <Button value="retry">Retry</Button>,
@@ -87,7 +92,7 @@ app.frame('/submit', async (c) => {
 
   if (!validateEmail(inputText)) {
     return c.res({
-      action: '/',
+      action: `/${formUrl}`,
       image: stringImage("The email is invalid"),
       intents: [
         <Button.Reset>Retry</Button.Reset>,
@@ -106,7 +111,6 @@ app.frame('/submit', async (c) => {
   }
 
   const bucketName = process.env.GS_FORM_BUCKET_NAME || "";
-  const formUrl = process.env.FORM_URL || "";
   const settingsUrl = `https://storage.googleapis.com/${bucketName}/${formUrl}/settings.json`;
 
   try {
@@ -140,7 +144,7 @@ app.frame('/submit', async (c) => {
 
       // if (response.ok) {
         return c.res({
-          action: '/',
+          action: `/${formUrl}`,
           image: stringImage("Email sent!"),
           intents: [
             <Button.Reset>Back</Button.Reset>,
@@ -148,7 +152,7 @@ app.frame('/submit', async (c) => {
         }) 
       } else {
         return c.res({
-          action: '/',
+          action: `/${formUrl}`,
           image: stringImage("An error occured during submission"),
           intents: [
             <Button.Reset>Back</Button.Reset>,
@@ -157,7 +161,7 @@ app.frame('/submit', async (c) => {
       }
     // } else {
     //   return c.res({
-    //     action: '/',
+    //     action: `/${formUrl}`,
     //     image: stringImage("Invalid form!"),
     //     intents: [
     //       <Button.Reset>Back</Button.Reset>,
@@ -168,7 +172,7 @@ app.frame('/submit', async (c) => {
    catch (error) {
       console.error('Error fetching form settings:', error);
       return c.res({
-        action: '/',
+        action: `/${formUrl}`,
         image: stringImage("An error occured fetching form!"),
         intents: [
           <Button.Reset>Back</Button.Reset>,
