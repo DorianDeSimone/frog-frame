@@ -8,9 +8,20 @@ import { neynar } from 'frog/hubs'
 import { neynar as neynarMid } from 'frog/middlewares'
 import { handle } from 'frog/next'
 import { serveStatic } from 'frog/serve-static'
+import {
+  RED,
+  BLUE,
+  FETCHING_FAILURE,
+  INVALID_FORM,
+  EMAIL_PLACEHOLDER,
+  BUTTON_SUBMIT,
+  BUTTON_RESET,
+  BUTTON_BACK,
+  NOT_VERIFIED,
+  INVALID_EMAIL,
+  SUBMITTED,
+} from '../../utils/constants'
 
-const BLUE = "#109cf1"
-const RED = "#f7685b"
 
 const stringImage = ({text, bgColor = BLUE}: {
   text: string;
@@ -70,13 +81,13 @@ app.frame('/:formUrl', async (c) => {
   try {
     const response = await fetch(settingsUrl);
     if (!response.ok) {
-        throw new Error('Failed to fetch form settings');
+        throw new Error(FETCHING_FAILURE);
     }
     const formSettings = await response.json();
     const fields = formSettings.field_settings[0]?.fields || [];
 
     if (!validateForm(fields)) {
-      throw new Error('Invalid form');
+      throw new Error(INVALID_FORM);
     }
 
     const firstHeadline = fields.find((field: any) => field.type === 'headline')?.options.label || '';
@@ -125,22 +136,22 @@ app.frame('/:formUrl', async (c) => {
         </div>
       ),
       intents: [
-        <TextInput placeholder="Enter your email..." />,
-        <Button>Subscribe</Button>,
+        <TextInput placeholder={EMAIL_PLACEHOLDER} />,
+        <Button>{BUTTON_SUBMIT}</Button>,
       ],
     })
   } catch(error: any) {
     if (error.message === "Invalid form") {
       return c.res({
         action: `/${formUrl}`,
-        image: stringImage({text: "Invalid form", bgColor: RED}),
+        image: stringImage({text: INVALID_FORM, bgColor: RED}),
       })
     } else {
       return c.res({
         action: `/${formUrl}`,
-        image: stringImage({text: "An error occured fetching form!", bgColor: RED}),
+        image: stringImage({text: FETCHING_FAILURE, bgColor: RED}),
         intents: [
-          <Button.Reset>Retry</Button.Reset>,
+          <Button.Reset>{BUTTON_RESET}</Button.Reset>,
         ],
       })
     }
@@ -155,9 +166,9 @@ app.frame('/submit/:formUrl', async (c) => {
   if(!verified) {
     return c.res({
       action: `/${formUrl}`,
-      image: stringImage({text: "You are not verified", bgColor: RED}),
+      image: stringImage({text: NOT_VERIFIED, bgColor: RED}),
       intents: [
-        <Button value="retry">Retry</Button>,
+        <Button value="retry">{BUTTON_RESET}</Button>,
       ],
     })
   }
@@ -165,9 +176,9 @@ app.frame('/submit/:formUrl', async (c) => {
   if (!validateEmail(inputText)) {
     return c.res({
       action: `/${formUrl}`,
-      image: stringImage({text: "The email is invalid", bgColor: RED}),
+      image: stringImage({text: INVALID_EMAIL, bgColor: RED}),
       intents: [
-        <Button.Reset>Retry</Button.Reset>,
+        <Button.Reset>{BUTTON_RESET}</Button.Reset>,
       ],
     })
   }
@@ -188,13 +199,10 @@ app.frame('/submit/:formUrl', async (c) => {
   try {
     const response = await fetch(settingsUrl);
     if (!response.ok) {
-        throw new Error('Failed to fetch form settings');
+        throw new Error(FETCHING_FAILURE);
     }
     const formSettings = await response.json();
     const fields = formSettings.field_settings[0]?.fields || [];
-
-    const firstHeadline = fields.find((field: any) => field.type === 'headline')?.options.label || '';
-    const firstImage = fields.find((field: any) => field.type === 'image')?.options.url || '';
 
     if (validateForm(fields)) {
       const emailField = fields.find((field: any) => field.name === 'email')
@@ -229,28 +237,27 @@ app.frame('/submit/:formUrl', async (c) => {
 
       return c.res({
         action: `/${formUrl}`,
-        image: stringImage({text: "Email sent!"}),
+        image: stringImage({text: SUBMITTED}),
         intents: [
-          <Button.Reset>Back</Button.Reset>,
+          <Button.Reset>{BUTTON_BACK}</Button.Reset>,
         ],
       }) 
     } else {
       return c.res({
         action: `/${formUrl}`,
-        image: stringImage({text: "Invalid form!", bgColor: RED}),
+        image: stringImage({text: INVALID_FORM, bgColor: RED}),
         intents: [
-          <Button.Reset>Back</Button.Reset>,
+          <Button.Reset>{BUTTON_RESET}</Button.Reset>,
         ],
       })
      }
     }
    catch (error) {
-      console.error('Error fetching form settings:', error);
       return c.res({
         action: `/${formUrl}`,
-        image: stringImage({text: "An error occured fetching form!", bgColor: RED}),
+        image: stringImage({text: FETCHING_FAILURE, bgColor: RED}),
         intents: [
-          <Button.Reset>Back</Button.Reset>,
+          <Button.Reset>{BUTTON_RESET}</Button.Reset>,
         ],
       })
   }
