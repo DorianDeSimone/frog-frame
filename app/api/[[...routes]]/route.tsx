@@ -21,6 +21,8 @@ import {
   INVALID_EMAIL,
   SUBMITTED,
 } from '../../utils/constants'
+import Image from 'next/image'
+import DefaultImage from '../../../public/assets/welcome.jpg'
 
 
 const stringImage = ({text, bgColor = BLUE}: {
@@ -107,7 +109,8 @@ app.frame('/:formUrl', async (c) => {
           height: '100%',
           width: '100%',
         }}>
-          <img src={firstImage ? firstImage : `${process.env.NEXT_PUBLIC_SITE_URL}/assets/welcome.jpg`} />
+          <Image alt="home image" src={!firstImage ? firstImage : `https://farcaster-forms-ueaw7cfn5q-uc.a.run.app/assets/welcome.jpg`} />
+          {/* <Image alt="home image" src={!firstImage ? firstImage : `${process.env.NEXT_PUBLIC_SITE_URL}/assets/welcome.jpg`} /> */}
           <div
             style={{
               display: 'flex',
@@ -117,7 +120,7 @@ app.frame('/:formUrl', async (c) => {
               transform: 'translate(-50%, -50%)',
               zIndex: 1,
               backgroundColor: 'rgba(0, 0, 0, 0.25)',
-              padding: firstHeadline ? '0 18px' : '0',
+              padding: firstHeadline ? '0 36px' : '0',
               borderRadius: '8px',
             }}
           >
