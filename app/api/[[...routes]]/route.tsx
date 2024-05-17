@@ -108,50 +108,51 @@ app.frame('/:formUrl', async (c) => {
   
     return c.res({
       action: `/submit/${formUrl}`,
-      image: (
-        <div
-        style={{
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          flexWrap: 'nowrap',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100%',
-          width: '100%',
-        }}>
-          {/* @ts-ignore */}
-          {/* <img alt="home image" src={imageUrl} /> */}
-          {/* <img alt="home image" src={!firstImage ? firstImage : `${process.env.NEXT_PUBLIC_SITE_URL}/assets/welcome.jpg`} /> */}
-          {/* <img alt="home image" src={!firstImage ? firstImage : imageData} /> */}
-          {/* <Image alt="home image" src={!firstImage ? firstImage : `${process.env.NEXT_PUBLIC_SITE_URL}/assets/welcome.jpg`} /> */}
-          <div
-            style={{
-              display: 'flex',
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              zIndex: 1,
-              backgroundColor: 'rgba(0, 0, 0, 0.25)',
-              padding: firstHeadline ? '0 36px' : '0',
-              borderRadius: '8px',
-            }}
-          >
-            <p
-              style={{
-                color: 'white',
-                fontSize: 60,
-                fontStyle: 'normal',
-                letterSpacing: '-0.025em',
-                lineHeight: 1.4,
-              }}
-            >
-              {firstHeadline}
-            </p>
-          </div>
-        </div>
-      ),
+      image: `${process.env.NEXT_PUBLIC_SITE_URL}/images/home`,
+      // image: (
+      //   <div
+      //   style={{
+      //     position: 'relative',
+      //     display: 'flex',
+      //     flexDirection: 'column',
+      //     flexWrap: 'nowrap',
+      //     alignItems: 'center',
+      //     justifyContent: 'center',
+      //     height: '100%',
+      //     width: '100%',
+      //   }}>
+      //     {/* @ts-ignore */}
+      //     {/* <img alt="home image" src={imageUrl} /> */}
+      //     {/* <img alt="home image" src={!firstImage ? firstImage : `${process.env.NEXT_PUBLIC_SITE_URL}/assets/welcome.jpg`} /> */}
+      //     {/* <img alt="home image" src={!firstImage ? firstImage : imageData} /> */}
+      //     {/* <Image alt="home image" src={!firstImage ? firstImage : `${process.env.NEXT_PUBLIC_SITE_URL}/assets/welcome.jpg`} /> */}
+      //     <div
+      //       style={{
+      //         display: 'flex',
+      //         position: 'absolute',
+      //         top: '50%',
+      //         left: '50%',
+      //         transform: 'translate(-50%, -50%)',
+      //         zIndex: 1,
+      //         backgroundColor: 'rgba(0, 0, 0, 0.25)',
+      //         padding: firstHeadline ? '0 36px' : '0',
+      //         borderRadius: '8px',
+      //       }}
+      //     >
+      //       <p
+      //         style={{
+      //           color: 'white',
+      //           fontSize: 60,
+      //           fontStyle: 'normal',
+      //           letterSpacing: '-0.025em',
+      //           lineHeight: 1.4,
+      //         }}
+      //       >
+      //         {firstHeadline}
+      //       </p>
+      //     </div>
+      //   </div>
+      // ),
       intents: [
         <TextInput placeholder={EMAIL_PLACEHOLDER} />,
         <Button>{BUTTON_SUBMIT}</Button>,
