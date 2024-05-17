@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.text}>
-        Absolute Labs Warpcast Frame 13:43
+        Absolute Labs Warpcast Frame 18:26
       </div>
     </main>
   )

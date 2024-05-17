@@ -95,7 +95,6 @@ app.frame('/:formUrl', async (c) => {
 
     const firstHeadline = fields.find((field: any) => field.type === 'headline')?.options.label || '';
     const firstImage = fields.find((field: any) => field.type === 'image')?.options.url || '';
-
   
     return c.res({
       action: `/submit/${formUrl}`,
@@ -112,7 +111,8 @@ app.frame('/:formUrl', async (c) => {
           width: '100%',
         }}>
           {/* @ts-ignore */}
-          <img alt="home image" src={firstImage ? firstImage : `${process.env.NEXT_PUBLIC_SITE_URL}/assets/welcome.png`} />
+          <img alt="home image" src={`${process.env.NEXT_PUBLIC_SITE_URL}/assets/default.png`} />
+          {/* <img alt="home image" src={firstImage ? firstImage : `${process.env.NEXT_PUBLIC_SITE_URL}/assets/default.png`} /> */}
           <div
             style={{
               display: 'flex',
