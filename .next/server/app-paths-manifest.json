@@ -1,4 +1,3 @@
 {
-  "/images/home/route": "app/images/home/route.js",
   "/api/[[...routes]]/route": "app/api/[[...routes]]/route.js"
 }
