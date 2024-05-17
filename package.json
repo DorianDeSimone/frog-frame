@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@google-cloud/pubsub": "^4.4.0",
-    "frog": "latest",
+    "frog": "^0.11.2",
     "hono": "^4",
     "next": "14.1.0",
     "react": "^18",
