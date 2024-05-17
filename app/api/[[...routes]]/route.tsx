@@ -21,8 +21,6 @@ import {
   INVALID_EMAIL,
   SUBMITTED,
 } from '../../utils/constants'
-import Image from 'next/image'
-import DefaultImage from '../../../public/assets/welcome.jpg'
 
 
 const stringImage = ({text, bgColor = BLUE}: {
@@ -74,8 +72,7 @@ app.use(
 )
 
 app.frame('/:formUrl', async (c) => {
-  const { url } = c
-  const formUrl = url.split("/api/")[1];
+  const formUrl = c.req.param("formUrl");
 
   const bucketName = process.env.GS_FORM_BUCKET_NAME || "";
   const settingsUrl = `https://storage.googleapis.com/${bucketName}/${formUrl}/settings.json`;
@@ -94,6 +91,20 @@ app.frame('/:formUrl', async (c) => {
 
     const firstHeadline = fields.find((field: any) => field.type === 'headline')?.options.label || '';
     const firstImage = fields.find((field: any) => field.type === 'image')?.options.url || '';
+
+    // const imageData = await fetch(
+    //   // new URL(`${process.env.NEXT_PUBLIC_SITE_URL}/assets/welcome.jpg}`, import.meta.url)
+    //   // new URL('../../assets/default.jpg', process.env.NEXT_PUBLIC_SITE_URL)
+    //   new URL('../../assets/default.jpg', import.meta.url)
+    // ).then((res) => {
+    //   console.log("res", res)
+    //   return res.arrayBuffer()
+    // })
+
+    // console.log("imageData", imageData)
+    // const blob = new Blob([imageData], { type: 'image/jpeg' });
+    // const imageUrl = URL.createObjectURL(blob);
+
   
     return c.res({
       action: `/submit/${formUrl}`,
@@ -109,7 +120,10 @@ app.frame('/:formUrl', async (c) => {
           height: '100%',
           width: '100%',
         }}>
-          <Image alt="home image" src={!firstImage ? firstImage : `https://farcaster-forms-ueaw7cfn5q-uc.a.run.app/assets/welcome.jpg`} />
+          {/* @ts-ignore */}
+          {/* <img alt="home image" src={imageUrl} /> */}
+          {/* <img alt="home image" src={!firstImage ? firstImage : `${process.env.NEXT_PUBLIC_SITE_URL}/assets/welcome.jpg`} /> */}
+          {/* <img alt="home image" src={!firstImage ? firstImage : imageData} /> */}
           {/* <Image alt="home image" src={!firstImage ? firstImage : `${process.env.NEXT_PUBLIC_SITE_URL}/assets/welcome.jpg`} /> */}
           <div
             style={{
@@ -144,6 +158,7 @@ app.frame('/:formUrl', async (c) => {
       ],
     })
   } catch(error: any) {
+    console.log("error", error)
     if (error.message === "Invalid form") {
       return c.res({
         action: `/${formUrl}`,
@@ -162,8 +177,8 @@ app.frame('/:formUrl', async (c) => {
 })
 
 app.frame('/submit/:formUrl', async (c) => {
-  const { verified, frameData, inputText = '', initialPath } = c;
-  const formUrl = initialPath.split("/api/")[1];
+  const { verified, frameData, inputText = '' } = c;
+  const formUrl = c.req.param("formUrl");
   const { fid } = frameData || {}
 
   if(!verified) {
