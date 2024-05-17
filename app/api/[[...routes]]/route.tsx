@@ -63,6 +63,9 @@ const app = new Frog({
   origin: process.env.NEXT_PUBLIC_SITE_URL,
   hub: neynar({ apiKey: process.env.NEYNAR_API_KEY || "" }),
   verify: 'silent',
+  imageOptions: {
+    format: "png",
+  },
 })
 
 app.use(
@@ -109,7 +112,7 @@ app.frame('/:formUrl', async (c) => {
           width: '100%',
         }}>
           {/* @ts-ignore */}
-          <img alt="home image" src={firstImage ? firstImage : `${process.env.NEXT_PUBLIC_SITE_URL}/assets/welcome.jpg`} />
+          <img alt="home image" src={firstImage ? firstImage : `${process.env.NEXT_PUBLIC_SITE_URL}/assets/welcome.png`} />
           <div
             style={{
               display: 'flex',
