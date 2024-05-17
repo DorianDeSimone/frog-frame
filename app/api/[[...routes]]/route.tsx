@@ -60,6 +60,7 @@ const stringImage = ({text, bgColor = BLUE}: {
 const app = new Frog({
   assetsPath: '/',
   basePath: '/api',
+  origin: process.env.NEXT_PUBLIC_SITE_URL,
   hub: neynar({ apiKey: process.env.NEYNAR_API_KEY || "" }),
   verify: 'silent',
 })
