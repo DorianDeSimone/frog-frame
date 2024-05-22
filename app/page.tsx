@@ -4,7 +4,7 @@ import styles from './page.module.css'
 
 export async function generateMetadata(): Promise<Metadata> {
   const frameTags = await getFrameMetadata(
-    `${process.env.NEXT_PUBLIC_SITE_URL}/api/`,
+    `${process.env.NEXT_PUBLIC_SITE_URL}/api`,
   )
   return {
     other: frameTags,

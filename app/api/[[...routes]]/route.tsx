@@ -69,10 +69,10 @@ const app = new Frog({
   },
 })
 
-app.use(async (c, next) => {
-  await next()
-  c.header('Content-Type', 'application/json');
-})
+// app.use(async (c, next) => {
+//   await next()
+//   c.header('Content-Type', 'application/json');
+// })
 
 app.use(
   neynarMid({
