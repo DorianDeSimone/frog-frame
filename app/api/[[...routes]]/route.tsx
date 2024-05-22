@@ -61,11 +61,17 @@ const app = new Frog({
   assetsPath: '/',
   basePath: '/api',
   origin: process.env.NEXT_PUBLIC_SITE_URL,
+  browserLocation: process.env.NEXT_PUBLIC_SITE_URL,
   hub: neynar({ apiKey: process.env.NEYNAR_API_KEY || "" }),
   verify: 'silent',
   imageOptions: {
     format: "png",
   },
+})
+
+app.use('/:formUrl', async (c, next) => {
+  await next()
+  c.header('Content-Type', 'application/json');
 })
 
 app.use(
