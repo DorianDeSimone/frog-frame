@@ -69,7 +69,7 @@ const app = new Frog({
   },
 })
 
-app.use('/:formUrl', async (c, next) => {
+app.use(async (c, next) => {
   await next()
   c.header('Content-Type', 'application/json');
 })
