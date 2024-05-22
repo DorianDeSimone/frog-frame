@@ -120,7 +120,8 @@ app.frame('/:formUrl', async (c) => {
           width: '100%',
         }}>
           {/* @ts-ignore */}
-          <img alt="home image" src={`${process.env.NEXT_PUBLIC_SITE_URL}/assets/default.png`} />
+          <img alt="home image" src='https://farcaster-forms-ueaw7cfn5q-uc.a.run.app/assets/default.png' />
+          {/* <img alt="home image" src={`${process.env.NEXT_PUBLIC_SITE_URL}/assets/default.png`} /> */}
           {/* <img alt="home image" src={firstImage ? firstImage : `${process.env.NEXT_PUBLIC_SITE_URL}/assets/default.png`} /> */}
           <div
             style={{
