@@ -64,15 +64,15 @@ const app = new Frog({
   browserLocation: process.env.NEXT_PUBLIC_SITE_URL,
   hub: neynar({ apiKey: process.env.NEYNAR_API_KEY || "" }),
   verify: 'silent',
-  imageOptions: {
-    format: "png",
-  },
+  // imageOptions: {
+  //   format: "png",
+  // },
 })
 
-// app.use(async (c, next) => {
-//   await next()
-//   c.header('Content-Type', 'application/json');
-// })
+app.use(async (c, next) => {
+  await next()
+  c.header('Content-Type', 'application/json');
+})
 
 app.use(
   neynarMid({
@@ -104,6 +104,9 @@ app.frame('/:formUrl', async (c) => {
   
     return c.res({
       action: `/submit/${formUrl}`,
+      imageOptions: {
+        format: "png",
+      },
       image: (
         <div
         style={{
