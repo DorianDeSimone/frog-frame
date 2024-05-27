@@ -1,3 +1,6 @@
 {
-  "/api/[[...routes]]/route": "app/api/[[...routes]]/route.js"
+  "/not-found": "app/not-found.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/api/[[...routes]]/route": "app/api/[[...routes]]/route.js",
+  "/page": "app/page.js"
 }

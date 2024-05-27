@@ -1,18 +1,26 @@
 {
-  "name": "test-frog-node",
+  "name": "default-frog-next",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "frog dev",
-    "serve": "tsx src/index.tsx"
+    "dev": "next dev",
+    "deploy": "vercel",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@hono/node-server": "^1",
+    "frog": "latest",
     "hono": "^4",
-    "frog": "latest"
+    "react": "^18",
+    "react-dom": "^18",
+    "next": "14.1.0"
   },
   "devDependencies": {
-    "@types/node": "^20.11.17",
-    "tsx": "^3.12.2"
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "vercel": "^32.4.1"
   }
 }
