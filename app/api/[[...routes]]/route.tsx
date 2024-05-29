@@ -31,11 +31,13 @@ app.frame('/', (c) => {
   })
 })
 
-app
-.image('/img', (c) => {
+app.image('/img', (c) => {
+  console.log("c",c)
   return c.res({
-    headers: {
-        'Cache-Control': 'max-age=0'
+    imageOptions: {
+      headers: {
+        'Cache-Control': 'max-age=0',
+      },
     },
     image: (
       <div
