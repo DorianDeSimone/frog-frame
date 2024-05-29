@@ -20,6 +20,23 @@ app.frame('/', (c) => {
   const { buttonValue, inputText, status } = c
   const fruit = inputText || buttonValue
   return c.res({
+    image: '/img',
+    intents: [
+      <TextInput placeholder="Enter custom fruit..." />,
+      <Button value="apples">Apples</Button>,
+      <Button value="oranges">Oranges</Button>,
+      <Button value="bananas">Bananas</Button>,
+      status === 'response' && <Button.Reset>Reset</Button.Reset>,
+    ],
+  })
+})
+
+app
+.image('/img', (c) => {
+  return c.res({
+    headers: {
+        'Cache-Control': 'max-age=0'
+    },
     image: (
       <div
         style={{
@@ -51,18 +68,11 @@ app.frame('/', (c) => {
           }}
         >
           {status === 'response'
-            ? `Nice choice.${fruit ? ` ${fruit.toUpperCase()}!!` : ''}`
+            ? `Nice choice.`
             : 'Welcome!'}
         </div>
       </div>
     ),
-    intents: [
-      <TextInput placeholder="Enter custom fruit..." />,
-      <Button value="apples">Apples</Button>,
-      <Button value="oranges">Oranges</Button>,
-      <Button value="bananas">Bananas</Button>,
-      status === 'response' && <Button.Reset>Reset</Button.Reset>,
-    ],
   })
 })
 
